@@ -19,23 +19,23 @@ services:
     restart: unless-stopped
     environment:
       MONGO_URL: mongodb
-  prod:
-    container_name: server-prod
-    image: server-prod:1.0.0
-    build:
-      context: .
-      target: production
-      dockerfile: ./Dockerfile
-    command: npm run start:prod
-    ports:
-      - 3000:3000
-      - 9229:9229
-    networks:
-      - server-network
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    restart: unless-stopped
+#  prod:
+#    container_name: server-prod
+#    image: server-prod:1.0.0
+#    build:
+#      context: .
+#      target: production
+#      dockerfile: ./Dockerfile
+#    command: npm run start:prod
+#    ports:
+#      - 3001:3000
+#      - 9229:9229
+#    networks:
+#      - server-network
+#    volumes:
+#      - .:/usr/src/app
+#      - /usr/src/app/node_modules
+#    restart: unless-stopped
   mongodb:
     image: mongo:5.0.0
     container_name: server-mongodb
@@ -78,6 +78,26 @@ services:
       timeout: 10s
       retries: 3
     restart: unless-stopped
+  localstack:
+    image: localstack/localstack
+    container_name: localstack-webhooks
+    hostname: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      # Declare which aws services will be used in localstack
+      - SERVICES=sqs,sns
+      - DEBUG=1
+      # These variables are needed for localstack
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=testUser
+      - AWS_SECRET_ACCESS_KEY=testAccessKey
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - "${TMPDIR:-/tmp}/localstack:/tmp/localstack"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./create-resources.sh:/docker-entrypoint-initaws.d/create-resources.sh
 volumes:
   mongodb-data:
     name: mongodb-data
