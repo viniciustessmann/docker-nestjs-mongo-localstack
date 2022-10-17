@@ -9,8 +9,8 @@ services:
       dockerfile: ./Dockerfile
     command: npm run start:debug
     ports:
-      - 3000:3000
-      - 9229:9229
+      - ${APP_PORT}:3000
+      - ${TCP_PORT}:9229
     networks:
       - server-network
     volumes:
@@ -30,9 +30,9 @@ services:
     networks:
       - server-network
     ports:
-      - 27017:27017
+      - ${MONGODB_PORT}:27017
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:${MONGODB_PORT}/test --quiet
       interval: 30s
       timeout: 10s
       retries: 3
@@ -54,7 +54,7 @@ services:
     networks:
       - server-network
     ports:
-      - 8081:8081
+      - ${MONGODB_EXPRESS_PORT}:8081
     healthcheck:
       interval: 30s
       timeout: 10s
@@ -65,7 +65,7 @@ services:
     container_name: localstack-webhooks
     hostname: localstack
     ports:
-      - "4566:4566"
+      - "${LOCALSTACK_PORT}:4566"
     environment:
       # Declare which aws services will be used in localstack
       - SERVICES=sqs,sns
