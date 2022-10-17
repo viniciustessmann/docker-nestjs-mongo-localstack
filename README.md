@@ -19,13 +19,16 @@ Listar pilhas SQS localstack:
 `docker exec -it localstack-webhooks awslocal sqs list-queues`
 
 Accessar projeto API Gerenciadora:
-https://localhost:3000
+- https://localhost:APP_PORT
+- https://localhost:3000
 
 Acessar o banco de dados mongo
-http://admin:admin123@localhost:8081
+- http://ME_CONFIG_BASICAUTH_USERNAME:ME_CONFIG_BASICAUTH_PASSWORD@localhost:MONGODB_EXPRESS_PORT
+- http://admin:admin123@localhost:8081
 
 Check localstack
-https://localhost:4566/health
+- https://localhost:LOCALSTACK_PORT/health
+- https://localhost:4566/health
 
 ## Referencias
 ### Tutorial
