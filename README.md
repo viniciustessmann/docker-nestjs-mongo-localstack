@@ -1,9 +1,19 @@
-# Docker NestJS + MongoDB + localstack
+# Docker para API Gerenciadora de Webhooks de Melhor Envio
 
+Ambiente dockerizado desenvolvido para o projeto de Webhooks do Melhor Envio, esse ambiente contém:
+- Template NestJs
+- Banco de dados MongoDB
+- Localstack (Simulação de serviços da Amazon, como por exemplo SNS e SQS)
 
 ## comandos
 Rodar projeto
 `docker-compose up -d`
+
+Listar tópics SNS localstack:
+`docker exec -it localstack-webhooks awslocal sns list-topics`
+
+Listar pilhas SQS localstack:
+`docker exec -it localstack-webhooks awslocal sqs list-queues`
 
 Accessar projeto API Gerenciadora:
 https://localhost:3000
