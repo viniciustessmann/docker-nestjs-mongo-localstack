@@ -6,6 +6,9 @@ Ambiente dockerizado desenvolvido para o projeto de Webhooks do Melhor Envio, es
 - Localstack (Simulação de serviços da Amazon, como por exemplo SNS e SQS)
 
 ## comandos
+Criar .env
+`mv .env.example .env`
+
 Rodar projeto
 `docker-compose up -d`
 
